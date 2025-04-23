@@ -133,6 +133,10 @@ export default function BasePool() {
           return handleTransaction(amount);
         } catch (switchError) {
           console.error('Error switching to Base:', switchError);
+          notification({
+            title: "❌ Network Error",
+            body: "Please switch to Base network manually in your wallet"
+          }).catch(console.error);
           return;
         }
       }
@@ -205,42 +209,23 @@ export default function BasePool() {
         <div className="bg-white rounded-lg w-full h-full p-2 flex flex-col border-2 border-[#0052FF]">
           {/* Header */}
           <div className="text-center mb-4">
-            <h1 className="text-[#0052FF] text-4xl [font-family:ProtoMono] leading-tight">
+            <h1 className="text-[#0052FF] text-4xl [font-family:ProtoMono] leading-tight mb-2">
               BasePool
             </h1>
-            <h2 
-              className="text-[#0052FF] text-xl [font-family:ProtoMono] leading-tight p-1 cursor-pointer hover:opacity-80"
-              onClick={() => setIsDescriptionModalOpen(true)}
-            >
-              A provable fair game.
+            <h2 className="text-[#0052FF] text-xl [font-family:ProtoMono] leading-tight text-center mb-1">
+             {poolStatus?.[1]?.toString() || '0'} / 1000 tickets sold
             </h2>
             <h2 className="text-[#0052FF] text-xl [font-family:ProtoMono] leading-tight">
-              🏆 Prize: 0.5 ETH 🏆
+              🏆 Pool target: 0.5 ETH 🏆
             </h2>
           </div>
 
           {/* Game explanation and Send ETH buttons */}
           <div className="text-[#0A0B0D] text-base [font-family:ProtoMono] leading-snug">
-            <p className="flex items-start mb-1">
-              <span>💸 0.0005 ETH each ticket.</span>
-            </p>
-            <p className="flex items-start mb-1">
-              <span>🎟️ Pool target = 1,000 tickets.</span>
-            </p>
-            <p className="flex items-start mb-1">
-              <span>🎲 /pyth draws a random number.</span>
-            </p>
-            <p className="flex items-start mb-1">
-              <span>🍀 Lucky number receives balance.</span>
-            </p>
-            <p className="flex items-start mb-2">
-              <span>♻️ New pool starts, same rules.</span>
-            </p>
-
             <h2 className="text-[#0052FF] text-xl [font-family:ProtoMono] leading-tight text-center mb-3">
               👇🏻 Buy Tickets 👇🏻
             </h2>
-            <div className="grid grid-cols-2 gap-2 max-w-xl mx-auto mb-2">
+            <div className="grid grid-cols-2 gap-2 max-w-xl mx-auto mb-4">
               <PillButton 
                 numbers="1 Ticket"
                 eth="0.0005 ETH"
@@ -262,9 +247,18 @@ export default function BasePool() {
                 onClick={() => handleTransaction("0.005")}
               />
             </div>
-            <h2 className="text-[#0052FF] text-xl [font-family:ProtoMono] leading-tight text-center mb-1">
-              {poolStatus?.[1]?.toString() || '0'} / 1000 tickets sold
-            </h2>
+            <p className="flex items-start mb-1">
+              <span>💸0.0005 ETH per ticket.</span>
+            </p>
+            <p className="flex items-start mb-1">
+              <span>🎲/pyth draws a random number.</span>
+            </p>
+            <p className="flex items-start mb-1">
+              <span>🍀Lucky number gets pool balance.</span>
+            </p>
+            <p className="flex items-start mb-4">
+              <span>♻️New pool starts, same rules.</span>
+            </p>
             <h2 
               className="text-[#0052FF] text-xl [font-family:ProtoMono] leading-tight text-center mb-1 cursor-pointer hover:opacity-80"
               onClick={() => setIsDescriptionModalOpen(true)}
@@ -276,7 +270,7 @@ export default function BasePool() {
               className="w-full mt-1 text-[10px] [font-family:ProtoMono] text-black opacity-40 cursor-pointer hover:opacity-70 text-center"
               onClick={() => window.open("https://basescan.org/address/0xb40B5ef4c7cd998B5ef1F7aFB34E842F2Dac3A44", "_blank")}
             >
-              Smart Contract verified at BaseScan
+              Smart Contract verified at BaseScan ✅
             </button>
           </div>
         </div>
@@ -306,7 +300,7 @@ export default function BasePool() {
                 </>
               )}
             </span>
-          </div>
+        </div>
         </div>
       </div>
 

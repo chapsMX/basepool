@@ -63,38 +63,38 @@ export default function App() {
       {/* Header */}
       <header className="w-full py-0 px-4 flex justify-between items-center">
         <div className="flex items-center">
-          {address ? (
-            <Identity
-              address={address}
-              schemaId={SCHEMA_UID}
+            {address ? (
+              <Identity
+                address={address}
+                schemaId={SCHEMA_UID}
               className="!bg-inherit p-0 [&>div]:space-x-2 [font-family:ProtoMono]"
-            >
+              >
               <Name className="text-inherit" />
-            </Identity>
-          ) : (
+              </Identity>
+            ) : (
             <div className="text-gray-500 text-sm [font-family:ProtoMono]">
-              NOT CONNECTED
-            </div>
-          )}
-        </div>
+                NOT CONNECTED
+              </div>
+            )}
+          </div>
         <div>{saveFrameButton}</div>
-      </header>
+        </header>
 
       {/* Main Content */}
       <main className="flex-1 w-full overflow-y-auto">
-        <Snake />
-      </main>
+          <Snake />
+        </main>
 
       {/* Footer */}
       <footer className="w-full py-1 flex justify-center">
-        <button
-          type="button"
+          <button
+            type="button"
           className="px-2 py-1 flex justify-start rounded-2xl opacity-40 border border-black text-xs [font-family:ProtoMono]"
-          onClick={() => openUrl("https://base.org/builders/minikit")}
-        >
-          BUILT ON BASE WITH MINIKIT
-        </button>
-      </footer>
+            onClick={() => openUrl("https://base.org/builders/minikit")}
+          >
+            BUILT ON BASE WITH MINIKIT
+          </button>
+        </footer>
     </div>
   );
 }
