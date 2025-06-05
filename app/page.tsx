@@ -7,7 +7,7 @@ import {
 } from "@coinbase/onchainkit/minikit";
 import { Name, Identity } from "@coinbase/onchainkit/identity";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import Snake from "./components/snake";
+import BasePool from "./components/bpHome";
 import { useAccount } from "wagmi";
 import Check from "./svg/Check";
 
@@ -82,7 +82,7 @@ export default function App() {
 
       {/* Main Content */}
       <main className="flex-1 w-full overflow-y-auto">
-          <Snake />
+          <BasePool />
         </main>
 
       {/* Footer */}

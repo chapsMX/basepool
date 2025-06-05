@@ -21,7 +21,7 @@ import {
 import { useAccount, useWalletClient } from "wagmi";
 import { parseEther } from "viem";
 import "./basepool.css";
-import { CONTRACT_ADDRESS, CONTRACT_ABI } from "../lib/contract";
+import { CONTRACT_ADDRESS, CONTRACT_ABI } from "../lib/contract_1000";
 import PoolModal from './PoolModal';
 import WarningModal from './WarningModal';
 import TransactionModal from './TransactionModal';
@@ -95,7 +95,7 @@ function PillButton({ numbers, eth, onClick }: PillButtonProps) {
   );
 }
 
-export default function BasePool() {
+export default function Bp_1000() {
   const { address } = useAccount();
   const { data: walletClient } = useWalletClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
