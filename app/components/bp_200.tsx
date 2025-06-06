@@ -21,8 +21,8 @@ import {
 import { useAccount, useWalletClient } from "wagmi";
 import { parseEther } from "viem";
 import "./basepool.css";
-import { CONTRACT_ADDRESS, CONTRACT_ABI } from "../lib/contract_100";
-import PoolModal from './Modal_100';
+import { CONTRACT_ADDRESS, CONTRACT_ABI } from "../lib/contract_200";
+import PoolModal from './Modal_200';
 import WarningModal from './WarningModal';
 import TransactionModal from './TransactionModal';
 import sdk from '@farcaster/frame-sdk';
@@ -185,13 +185,13 @@ export default function Bp_1000() {
   const handleShare = async () => {
     try {
       const text = `🔵 Base Pool — fair onchain game
-🏆 Prize: 0.05 ETH
+🏆 Prize: 0.1 ETH
 💸 0.0005 ETH = 1 number
-🎲 At 0.05 ETH, /pyth draws a random number between 0-99
+🎲 At 0.1 ETH, /pyth draws a random number between 0-199
 🍀 Lucky number receives contract balance
 ♻️ New round starts same way
 
-🎟️ Numbers sold: ${poolStatus?.[1] || 0} / 100`;
+🎟️ Numbers sold: ${poolStatus?.[1] || 0} / 200`;
       const linkUrl = "https://basepool.miniapps.zone";
 
       await sdk.actions.openUrl(
@@ -213,10 +213,10 @@ export default function Bp_1000() {
               BasePool
             </h1>
             <h2 className="text-[#0052FF] text-xl [font-family:ProtoMono] leading-tight mb-2">
-              🏆 Pool target: 0.05 ETH 🏆
+              🏆 Pool target: 0.1 ETH 🏆
             </h2>
             <h2 className="text-[#0052FF] text-xl [font-family:ProtoMono] leading-tight text-center mb-2">
-             {poolStatus?.[1]?.toString() || '0'} / 100 tickets sold
+             {poolStatus?.[1]?.toString() || '0'} / 200 tickets sold
             </h2>
           </div>
 
@@ -278,7 +278,7 @@ export default function Bp_1000() {
             <button
               type="button"
               className="w-full mt-1 text-[14px] [font-family:ProtoMono] text-black opacity-40 cursor-pointer hover:opacity-70 text-center"
-              onClick={() => window.open("https://basescan.org/address/0xaae2562af90420061e46f43c8254caf741f605ca", "_blank")}
+              onClick={() => window.open("https://basescan.org/address/0x5f5e1c630972299896fe8712d3bbaa92ee285baa", "_blank")}
             >
               Smart Contract verified at BaseScan ✅
             </button>

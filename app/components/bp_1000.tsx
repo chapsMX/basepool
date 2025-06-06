@@ -22,7 +22,7 @@ import { useAccount, useWalletClient } from "wagmi";
 import { parseEther } from "viem";
 import "./basepool.css";
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from "../lib/contract_1000";
-import PoolModal from './PoolModal';
+import PoolModal from './Modal_1000';
 import WarningModal from './WarningModal';
 import TransactionModal from './TransactionModal';
 import sdk from '@farcaster/frame-sdk';
@@ -226,10 +226,15 @@ export default function Bp_1000() {
               👇🏻 Buy Tickets 👇🏻
             </h2>
             <div className="grid grid-cols-2 gap-2 max-w-xl mx-auto mb-4">
-              <PillButton 
+            <PillButton 
                 numbers="1 Ticket"
                 eth="0.0005 ETH"
                 onClick={() => handleTransaction("0.0005")}
+              />
+              <PillButton 
+                numbers="2 Tickets"
+                eth="0.001 ETH"
+                onClick={() => handleTransaction("0.001")}
               />
               <PillButton 
                 numbers="3 Tickets"
@@ -241,10 +246,15 @@ export default function Bp_1000() {
                 eth="0.0025 ETH"
                 onClick={() => handleTransaction("0.0025")}
               />
-              <PillButton 
+             <PillButton 
                 numbers="10 Tickets"
                 eth="0.005 ETH"
                 onClick={() => handleTransaction("0.005")}
+              />
+              <PillButton 
+                numbers="20 Tickets"
+                eth="0.01 ETH"
+                onClick={() => handleTransaction("0.01")}
               />
             </div>
             <p className="flex items-start mb-1">

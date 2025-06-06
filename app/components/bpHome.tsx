@@ -53,16 +53,20 @@ export default function BasePool() {
   };
   const handleShare = async () => {
     try {
-      const text = `🔵 Base Pool — fair onchain game
-🏆 Prize: 0.5 ETH
-💸 0.0005 ETH = 1 number
-🎲 At 0.5 ETH, /pyth draws a random number between 0-999
-🍀 Lucky number receives contract balance
-♻️ New round starts same way`;
+      const text = `🔵 Base Pool 🔵
+      A provably fair onchain lottery game deployed on Base, designed to be simple, transparent and autonomous.
+      
+      Available Pools:
+      0.5 ETH Pool
+      0.1 ETH Pool
+      0.05 ETH Pool
+      1 ETH Pool (Coming Soon)
+      
+      Cost per ticket: 0.0005 ETH`;
       const linkUrl = "https://basepool.miniapps.zone";
 
       await sdk.actions.openUrl(
-        `https://warpcast.com/~/compose?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(linkUrl)}`
+        `https://farcaster.xyz/~/compose?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(linkUrl)}`
       );
     } catch (error) {
       console.error('Error sharing to Warpcast:', error);
