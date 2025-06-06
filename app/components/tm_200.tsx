@@ -2,7 +2,7 @@ import React from 'react';
 import { useTransaction, useContractRead } from 'wagmi';
 import { formatEther } from 'viem';
 import ArrowSvg from '../svg/ArrowSvg';
-import { CONTRACT_ADDRESS, CONTRACT_ABI } from '../lib/contract';
+import { CONTRACT_ADDRESS, CONTRACT_ABI } from '../lib/contract_200';
 import sdk from '@farcaster/frame-sdk';
 
 type TransactionModalProps = {
@@ -63,7 +63,7 @@ export default function TransactionModal({ isOpen, onClose, hash, amount, addres
 
   const numberOfNumbers = amount ? Number(amount) / 0.0005 : 0;
   const currentBalance = poolStatus?.[2] ? Number(formatEther(poolStatus[2])) : 0;
-  const threshold = poolStatus?.[3] ? Number(formatEther(poolStatus[3])) : 0.5;
+  const threshold = poolStatus?.[3] ? Number(formatEther(poolStatus[3])) : 0.1;
   const progress = (currentBalance / threshold) * 100;
 
   const handleShare = async () => {
@@ -74,11 +74,11 @@ export default function TransactionModal({ isOpen, onClose, hash, amount, addres
       await refetchPoolStatus();
       
       const numberOfTickets = Number(amount) / 0.0005;
-      const text = `I just bought ${numberOfTickets} ticket${numberOfTickets > 1 ? 's' : ''} for Base Pool, a fair on chain game\n\n🏆 Prize: 0.5 ETH\n💰 Pool Balance: ${currentBalance.toFixed(4)} ETH\n🎟️ Tickets sold: ${poolStatus?.[1] || 0} / 1000\n\nBuy your tickets and join Base Pool 👇`;
+      const text = `I bought ${numberOfTickets} ticket${numberOfTickets > 1 ? 's' : ''} for Base Pool, a provably fair onchain lottery game\n\n🏆 Pool Prize: 0.1 ETH\n💰 Current Balance: ${currentBalance.toFixed(4)} ETH\n🎟️ Tickets sold: ${poolStatus?.[1] || 0} / 200\n\nBuy your tickets and join Base Pool 👇`;
       const linkUrl = "https://basepool.miniapps.zone";
 
       await sdk.actions.openUrl(
-        `https://warpcast.com/~/compose?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(linkUrl)}`
+        `https://farcaster.xyz/~/compose?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(linkUrl)}`
       );
     } catch (error) {
       console.error('Error sharing to Warpcast:', error);
@@ -151,7 +151,7 @@ export default function TransactionModal({ isOpen, onClose, hash, amount, addres
               Pool Progress
             </div>
             <div className="flex justify-between text-sm [font-family:ProtoMono] mb-1">
-              <span>Current Balance</span>
+              <span>Current Balance:</span>
               <span>{currentBalance.toFixed(4)} ETH</span>
             </div>
             <div className="h-3 bg-white rounded-full overflow-hidden">
@@ -161,7 +161,7 @@ export default function TransactionModal({ isOpen, onClose, hash, amount, addres
               />
             </div>
             <div className="text-right text-xs [font-family:ProtoMono] mt-1">
-              Target: {threshold} ETH
+              Pool Target: {threshold} ETH
             </div>
           </div>
         )}

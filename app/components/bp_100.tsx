@@ -24,10 +24,11 @@ import "./basepool.css";
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from "../lib/contract_100";
 import PoolModal from './Modal_100';
 import WarningModal from './WarningModal';
-import TransactionModal from './TransactionModal';
+import TransactionModal from './tm_100';
 import sdk from '@farcaster/frame-sdk';
 import { useContractRead } from "wagmi";
 import DescriptionModal from './DescriptionModal';
+import { useRouter } from "next/navigation";
 
 type ControlButtonProps = {
   className?: string;
@@ -105,6 +106,7 @@ export default function Bp_1000() {
   const [transactionHash, setTransactionHash] = useState<`0x${string}` | undefined>();
   const [transactionAmount, setTransactionAmount] = useState<string | undefined>();
   const notification = useNotification();
+  const router = useRouter();
 
   const { data: poolStatus } = useContractRead({
     address: CONTRACT_ADDRESS,
@@ -205,7 +207,14 @@ export default function Bp_1000() {
   return (
     <div className="w-full h-full flex flex-col">
       {/* Contenedor principal blanco */}
-      <div className="flex-1 w-full max-w-2xl mx-auto px-1 py-4">
+      <div className="flex-1 w-full max-w-2xl mx-auto px-1 py-0">
+      <div className="flex items-center">
+      <button 
+        onClick={() => router.push('/')}
+      >
+        <span className="text-gray-500 text-sm [font-family:ProtoMono]">← Back Home</span>
+      </button>
+      </div>
         <div className="bg-white rounded-lg w-full h-full p-2 flex flex-col border-2 border-[#0052FF]">
           {/* Header */}
           <div className="text-center mb-0">

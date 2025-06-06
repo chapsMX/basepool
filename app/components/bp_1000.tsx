@@ -24,10 +24,11 @@ import "./basepool.css";
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from "../lib/contract_1000";
 import PoolModal from './Modal_1000';
 import WarningModal from './WarningModal';
-import TransactionModal from './TransactionModal';
+import TransactionModal from './tm_1000';
 import sdk from '@farcaster/frame-sdk';
 import { useContractRead } from "wagmi";
 import DescriptionModal from './DescriptionModal';
+import { useRouter } from "next/navigation";
 
 type ControlButtonProps = {
   className?: string;
@@ -96,6 +97,7 @@ function PillButton({ numbers, eth, onClick }: PillButtonProps) {
 }
 
 export default function Bp_1000() {
+  const router = useRouter();
   const { address } = useAccount();
   const { data: walletClient } = useWalletClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -195,7 +197,7 @@ export default function Bp_1000() {
       const linkUrl = "https://basepool.miniapps.zone";
 
       await sdk.actions.openUrl(
-        `https://warpcast.com/~/compose?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(linkUrl)}`
+        `https://farcaster.xyz/~/compose?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(linkUrl)}`
       );
     } catch (error) {
       console.error('Error sharing to Warpcast:', error);
@@ -205,13 +207,21 @@ export default function Bp_1000() {
   return (
     <div className="w-full h-full flex flex-col">
       {/* Contenedor principal blanco */}
-      <div className="flex-1 w-full max-w-2xl mx-auto px-1 py-1">
+      <div className="flex-1 w-full max-w-2xl mx-auto px-1 py-0">
+      <div className="flex items-center">
+      <button 
+        onClick={() => router.push('/')}
+      >
+        <span className="text-gray-500 text-sm [font-family:ProtoMono]">← Back Home</span>
+      </button>
+      </div>
         <div className="bg-white rounded-lg w-full h-full p-2 flex flex-col border-2 border-[#0052FF]">
           {/* Header */}
           <div className="text-center mb-4">
             <h1 className="text-[#0052FF] text-4xl [font-family:ProtoMono] leading-tight mb-2">
-              BasePool
+              BasePool 
             </h1>
+
             <h2 className="text-[#0052FF] text-xl [font-family:ProtoMono] leading-tight text-center mb-1">
              {poolStatus?.[1]?.toString() || '0'} / 1000 tickets sold
             </h2>
@@ -219,7 +229,6 @@ export default function Bp_1000() {
               🏆 Pool target: 0.5 ETH 🏆
             </h2>
           </div>
-
           {/* Game explanation and Send ETH buttons */}
           <div className="text-[#0A0B0D] text-base [font-family:ProtoMono] leading-snug">
             <h2 className="text-[#0052FF] text-xl [font-family:ProtoMono] leading-tight text-center mb-3">
