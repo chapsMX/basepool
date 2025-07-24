@@ -267,16 +267,16 @@ export default function Bp_1000() {
               />
             </div>
             <p className="flex items-start mb-1">
-              <span>💸0.0005 ETH per ticket.</span>
+              <span>🎟️ 0.0005 ETH per ticket.</span>
             </p>
             <p className="flex items-start mb-1">
-              <span>🎲/pyth draws a random number.</span>
+              <span>🎲 /pyth draws a random number.</span>
             </p>
             <p className="flex items-start mb-1">
-              <span>🍀Lucky number gets pool balance.</span>
+              <span>🍀 Lucky number gets pool balance.</span>
             </p>
             <p className="flex items-start mb-4">
-              <span>♻️New pool starts, same rules.</span>
+              <span>♻️ New pool starts, same rules.</span>
             </p>
             <h2 
               className="text-[#0052FF] text-xl [font-family:ProtoMono] leading-tight text-center mb-1 cursor-pointer hover:opacity-80"
