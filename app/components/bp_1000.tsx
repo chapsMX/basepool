@@ -186,19 +186,25 @@ export default function Bp_1000() {
 
   const handleShare = async () => {
     try {
-      const text = `🔵 Base Pool — fair onchain game
+      const text = `🟦 Base Pool 🟦 
+A provably fair onchain lottery game deployed on @base, designed to be simple, transparent and autonomous.
+
 🏆 Prize: 0.5 ETH
-💸 0.0005 ETH = 1 number
+🎟️ 0.0005 ETH = 1 ticket
 🎲 At 0.5 ETH, /pyth draws a random number between 0-999
 🍀 Lucky number receives contract balance
 ♻️ New round starts same way
 
-🎟️ Numbers sold: ${poolStatus?.[1] || 0} / 1000`;
-      const linkUrl = "https://basepool.miniapps.zone";
+🎟️ Tickets sold: ${poolStatus?.[1] || 0} / 1000`;
 
-      await sdk.actions.openUrl(
-        `https://farcaster.xyz/~/compose?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(linkUrl)}`
-      );
+      const result = await sdk.actions.composeCast({
+        text: text,
+        embeds: ["https://basepool.miniapps.zone"],
+      });
+
+      if (result?.cast) {
+        console.log('Cast shared successfully:', result.cast.hash);
+      }
     } catch (error) {
       console.error('Error sharing to Warpcast:', error);
     }
@@ -300,7 +306,7 @@ export default function Bp_1000() {
         <div className="grid grid-cols-3 gap-x-4">
           <div className="flex flex-col items-center">
             <ControlButton onClick={() => handleShare()} className="block mb-2" />
-            <span className="text-s [font-family:ProtoMono] text-[#0052FF] text-center">Share<br/>Frame</span>
+            <span className="text-s [font-family:ProtoMono] text-[#0052FF] text-center">Share<br/>MiniApp</span>
           </div>
           <div className="flex flex-col items-center">
             <ControlButton onClick={() => setIsModalOpen(true)} className="block mb-2" />

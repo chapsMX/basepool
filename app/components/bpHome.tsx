@@ -6,7 +6,6 @@ import React, {
 
 import {
   ConnectWallet,
-  ConnectWalletText,
   Wallet,
   WalletDropdown,
   WalletDropdownDisconnect,
@@ -53,21 +52,25 @@ export default function BasePool() {
   };
   const handleShare = async () => {
     try {
-      const text = `🔵 Base Pool 🔵
-      A provably fair onchain lottery game deployed on Base, designed to be simple, transparent and autonomous.
-      
-      Available Pools:
-      0.5 ETH Pool
-      0.1 ETH Pool
-      0.05 ETH Pool
-      1 ETH Pool (Coming Soon)
-      
-      Cost per ticket: 0.0005 ETH`;
-      const linkUrl = "https://basepool.miniapps.zone";
+      const text = `🟦 Base Pool 🟦 
+A provably fair onchain lottery game deployed on @base, designed to be simple, transparent and autonomous.
 
-      await sdk.actions.openUrl(
-        `https://farcaster.xyz/~/compose?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(linkUrl)}`
-      );
+Available Pools:
+0.5 ETH Pool Prize
+0.1 ETH Pool Prize
+0.05 ETH Pool Prize
+1 ETH Pool (Coming Soon)
+
+Cost per ticket: 0.0005 ETH`;
+
+      const result = await sdk.actions.composeCast({
+        text: text,
+        embeds: ["https://basepool.miniapps.zone"],
+      });
+
+      if (result?.cast) {
+        console.log('Cast shared successfully:', result.cast.hash);
+      }
     } catch (error) {
       console.error('Error sharing to Warpcast:', error);
     }
@@ -158,7 +161,7 @@ export default function BasePool() {
               Full Description / FAQ
             </h2>
             <p className="flex items-start mb-1">
-            <span className="text-[#0052FF] text-xs">💸 0.0005 ETH per ticket.</span>
+            <span className="text-[#0052FF] text-xs">🎟️ 0.0005 ETH per ticket.</span>
             </p>
             <p className="flex items-start mb-1">
             <span className="text-[#0052FF] text-xs">🎲 When pool reaches its target /pyth network draws a random number between participants.</span>

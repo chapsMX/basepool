@@ -186,19 +186,25 @@ export default function Bp_1000() {
 
   const handleShare = async () => {
     try {
-      const text = `🔵 Base Pool — fair onchain game
+      const text = `🟦 Base Pool 🟦 
+A provably fair onchain lottery game deployed on @base, designed to be simple, transparent and autonomous.
+
 🏆 Prize: 0.05 ETH
-💸 0.0005 ETH = 1 number
+🎟️ 0.0005 ETH = 1 ticket
 🎲 At 0.05 ETH, /pyth draws a random number between 0-99
 🍀 Lucky number receives contract balance
 ♻️ New round starts same way
 
-🎟️ Numbers sold: ${poolStatus?.[1] || 0} / 100`;
-      const linkUrl = "https://basepool.miniapps.zone";
+🎟️ Tickets sold: ${poolStatus?.[1] || 0} / 100`;
 
-      await sdk.actions.openUrl(
-        `https://farcaster.xyz/~/compose?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(linkUrl)}`
-      );
+      const result = await sdk.actions.composeCast({
+        text: text,
+        embeds: ["https://basepool.miniapps.zone"],
+      });
+
+      if (result?.cast) {
+        console.log('Cast shared successfully:', result.cast.hash);
+      }
     } catch (error) {
       console.error('Error sharing to Warpcast:', error);
     }
