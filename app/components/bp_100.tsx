@@ -21,13 +21,14 @@ import {
 import { useAccount, useWalletClient } from "wagmi";
 import { parseEther } from "viem";
 import "./basepool.css";
-import { CONTRACT_ADDRESS, CONTRACT_ABI } from "../lib/contract";
-import PoolModal from './PoolModal';
+import { CONTRACT_ADDRESS, CONTRACT_ABI } from "../lib/contract_100";
+import PoolModal from './Modal_100';
 import WarningModal from './WarningModal';
-import TransactionModal from './TransactionModal';
+import TransactionModal from './tm_100';
 import sdk from '@farcaster/frame-sdk';
 import { useContractRead } from "wagmi";
 import DescriptionModal from './DescriptionModal';
+import { useRouter } from "next/navigation";
 
 type ControlButtonProps = {
   className?: string;
@@ -95,7 +96,7 @@ function PillButton({ numbers, eth, onClick }: PillButtonProps) {
   );
 }
 
-export default function BasePool() {
+export default function Bp_1000() {
   const { address } = useAccount();
   const { data: walletClient } = useWalletClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -105,12 +106,13 @@ export default function BasePool() {
   const [transactionHash, setTransactionHash] = useState<`0x${string}` | undefined>();
   const [transactionAmount, setTransactionAmount] = useState<string | undefined>();
   const notification = useNotification();
+  const router = useRouter();
 
   const { data: poolStatus } = useContractRead({
     address: CONTRACT_ADDRESS,
     abi: CONTRACT_ABI,
     functionName: 'getPoolStatus'
-  });
+  }) as { data: [bigint, bigint] | undefined };
 
   const handleTransaction = async (amount: string) => {
     if (!walletClient) {
@@ -133,6 +135,10 @@ export default function BasePool() {
           return handleTransaction(amount);
         } catch (switchError) {
           console.error('Error switching to Base:', switchError);
+          notification({
+            title: "❌ Network Error",
+            body: "Please switch to Base network manually in your wallet"
+          }).catch(console.error);
           return;
         }
       }
@@ -157,7 +163,7 @@ export default function BasePool() {
       try {
         await notification({
           title: "🎲 BasePool Participation",
-          body: `Just acquired ${numberOfTickets} numbers in BasePool with ${amount} ETH!\n\n💰 Pool: 0.5 ETH\n🎯 Target: ${(Number(amount) / 0.5 * 100).toFixed(1)}% filled\n\nJoin the pool! 👇\nhttps://basepool.miniapps.zone`
+          body: `Just acquired ${numberOfTickets} numbers in BasePool with ${amount} ETH!\n\n💰 Pool: 0.05 ETH\n🎯 Target: ${(Number(amount) / 0.05 * 100).toFixed(1)}% filled\n\nJoin the pool! 👇\nhttps://basepool.miniapps.zone`
         });
       } catch (notifError) {
         console.error('Error sending notification:', notifError);
@@ -180,136 +186,148 @@ export default function BasePool() {
 
   const handleShare = async () => {
     try {
-      const text = `🔵 Base Pool — fair onchain game
-🏆 Prize: 0.5 ETH
-💸 0.0005 ETH = 1 number
-🎲 At 0.5 ETH, /pyth draws a random number between 0-999
+      const text = `🟦 Base Pool 🟦 
+A provably fair onchain lottery game deployed on @base, designed to be simple, transparent and autonomous.
+
+🏆 Prize: 0.05 ETH
+🎟️ 0.0005 ETH = 1 ticket
+🎲 At 0.05 ETH, /pyth draws a random number between 0-99
 🍀 Lucky number receives contract balance
 ♻️ New round starts same way
 
-🎟️ Numbers sold: ${poolStatus?.[1] || 0} / 1000`;
-      const linkUrl = "https://basepool.miniapps.zone";
+🎟️ Tickets sold: ${poolStatus?.[1] || 0} / 100`;
 
-      await sdk.actions.openUrl(
-        `https://warpcast.com/~/compose?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(linkUrl)}`
-      );
+      const result = await sdk.actions.composeCast({
+        text: text,
+        embeds: ["https://basepool.miniapps.zone"],
+      });
+
+      if (result?.cast) {
+        console.log('Cast shared successfully:', result.cast.hash);
+      }
     } catch (error) {
       console.error('Error sharing to Warpcast:', error);
     }
   };
 
   return (
-    <div className="w-full h-full overflow-y-auto">
-      <div className="min-h-[510px] w-[100%] mx-auto px-2 py-2 flex flex-col">
-        {/* Main blue container */}
-        <div className="relative bg-[#0052FF] p-[2px] rounded-lg flex-grow">
-          <div className="absolute inset-[4px] bg-white rounded-lg p-2">
-            {/* Header */}
-            <div className="text-center mb-3">
-              <h1 className="text-[#0052FF] text-4xl [font-family:ProtoMono] leading-tight">
-                BasePool
-              </h1>
-              <h2 
-                className="text-[#0052FF] text-xl [font-family:ProtoMono] leading-tight p-1 cursor-pointer hover:opacity-80"
-                onClick={() => setIsDescriptionModalOpen(true)}
-              >
-                A provable fair game.
-              </h2>
-              <h2 className="text-[#0052FF] text-xl [font-family:ProtoMono] leading-tight">
-                🏆 Prize: 0.5 ETH 🏆
-              </h2>
+    <div className="w-full h-full flex flex-col">
+      {/* Contenedor principal blanco */}
+      <div className="flex-1 w-full max-w-2xl mx-auto px-1 py-0">
+      <div className="flex items-center">
+      <button 
+        onClick={() => router.push('/')}
+      >
+        <span className="text-gray-500 text-sm [font-family:ProtoMono]">← Back Home</span>
+      </button>
+      </div>
+        <div className="bg-white rounded-lg w-full h-full p-2 flex flex-col border-2 border-[#0052FF]">
+          {/* Header */}
+          <div className="text-center mb-0">
+            <h1 className="text-[#0052FF] text-4xl [font-family:ProtoMono] leading-tight mb-0">
+              BasePool
+            </h1>
+            <h2 className="text-[#0052FF] text-xl [font-family:ProtoMono] leading-tight mb-2">
+              🏆 Pool target: 0.05 ETH 🏆
+            </h2>
+            <h2 className="text-[#0052FF] text-xl [font-family:ProtoMono] leading-tight text-center mb-2">
+             {poolStatus?.[1]?.toString() || '0'} / 100 tickets sold
+            </h2>
+          </div>
+
+          {/* Game explanation and Send ETH buttons */}
+          <div className="text-[#0A0B0D] text-base [font-family:ProtoMono] leading-snug">
+            <h2 className="text-[#0052FF] text-2xl [font-family:ProtoMono] leading-tight text-center mb-3">
+              👇🏻 Buy Tickets 👇🏻
+            </h2>
+            <div className="grid grid-cols-2 gap-2 max-w-xl mx-auto mb-4">
+              <PillButton 
+                numbers="1 Ticket"
+                eth="0.0005 ETH"
+                onClick={() => handleTransaction("0.0005")}
+              />
+              <PillButton 
+                numbers="2 Tickets"
+                eth="0.001 ETH"
+                onClick={() => handleTransaction("0.001")}
+              />
+              <PillButton 
+                numbers="3 Tickets"
+                eth="0.0015 ETH"
+                onClick={() => handleTransaction("0.0015")}
+              />
+              <PillButton 
+                numbers="5 Tickets"
+                eth="0.0025 ETH"
+                onClick={() => handleTransaction("0.0025")}
+              />
+             <PillButton 
+                numbers="10 Tickets"
+                eth="0.005 ETH"
+                onClick={() => handleTransaction("0.005")}
+              />
+              <PillButton 
+                numbers="20 Tickets"
+                eth="0.01 ETH"
+                onClick={() => handleTransaction("0.01")}
+              />
             </div>
-
-            {/* Game explanation and Send ETH buttons */}
-            <div className="text-[#0A0B0D] text-base [font-family:ProtoMono] leading-snug">
-              <p className="flex items-start mb-1">
-                <span>💸 0.0005 ETH each ticket.</span>
-              </p>
-              <p className="flex items-start mb-1">
-                <span>🎟️ Pool target = 1,000 tickets.</span>
-              </p>
-              <p className="flex items-start mb-1">
-                <span>🎲 /pyth draws a random number.</span>
-              </p>
-              <p className="flex items-start mb-1">
-                <span>🍀 Lucky number receives CA balance.</span>
-              </p>
-              <p className="flex items-start mb-2">
-                <span>♻️ New pool starts, same rules.</span>
-              </p>
-
-              <h2 className="text-[#0052FF] text-xl [font-family:ProtoMono] leading-tight text-center mb-3">
-                👇🏻 Buy Tickets 👇🏻
-              </h2>
-              <div className="grid grid-cols-2 gap-2 max-w-xl mx-auto mb-2">
-                <PillButton 
-                  numbers="1 Ticket"
-                  eth="0.0005 ETH"
-                  onClick={() => handleTransaction("0.0005")}
-                />
-                <PillButton 
-                  numbers="3 Tickets"
-                  eth="0.0015 ETH"
-                  onClick={() => handleTransaction("0.0015")}
-                />
-                <PillButton 
-                  numbers="5 Tickets"
-                  eth="0.0025 ETH"
-                  onClick={() => handleTransaction("0.0025")}
-                />
-                <PillButton 
-                  numbers="10 Tickets"
-                  eth="0.005 ETH"
-                  onClick={() => handleTransaction("0.005")}
-                />
-              </div>
-              <button
-            type="button"
-            className="w-full mt-1 text-[10px] [font-family:ProtoMono] text-black opacity-40 cursor-pointer hover:opacity-70 text-center"
-            onClick={() => window.open("https://basescan.org/address/0xb40B5ef4c7cd998B5ef1F7aFB34E842F2Dac3A44", "_blank")}
-          >
-            Smart Contract verified at BaseScan
-          </button> 
-          <h2 
-                className="text-[#0052FF] text-xl [font-family:ProtoMono] leading-tight text-center mb-3 cursor-pointer hover:opacity-80"
-                onClick={() => setIsDescriptionModalOpen(true)}
-              >
-                 Full Description / FAQ
-              </h2>
-            </div>
-
-
-
+            <p className="flex items-start mb-1">
+              <span>🎟️ 0.0005 ETH per ticket.</span>
+            </p>
+            <p className="flex items-start mb-1">
+              <span>🎲 /pyth draws a random number.</span>
+            </p>
+            <p className="flex items-start mb-1">
+              <span>🍀 Lucky number gets pool balance.</span>
+            </p>
+            <p className="flex items-start mb-2">
+              <span>♻️ New pool starts, same rules.</span>
+            </p>
+            <h2 
+              className="text-[#0052FF] text-xl [font-family:ProtoMono] leading-tight text-center mb-2 cursor-pointer hover:opacity-80"
+              onClick={() => setIsDescriptionModalOpen(true)}
+            >
+              Full Description / FAQ
+            </h2>
+            <button
+              type="button"
+              className="w-full mt-1 text-[14px] [font-family:ProtoMono] text-black opacity-40 cursor-pointer hover:opacity-70 text-center"
+              onClick={() => window.open("https://basescan.org/address/0xaae2562af90420061e46f43c8254caf741f605ca", "_blank")}
+            >
+              Smart Contract verified at BaseScan ✅
+            </button>
           </div>
         </div>
       </div>
 
-                  {/* Control buttons */}
-                  <div className="grid grid-cols-3 gap-x-4">
-              <div className="flex flex-col items-center">
-                <ControlButton onClick={() => handleShare()} className="block mb-2" />
-                <span className="text-s [font-family:ProtoMono] text-[#0052FF] text-center">Share<br/>Frame</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <ControlButton onClick={() => setIsModalOpen(true)} className="block mb-2" />
-                <span className="text-s [font-family:ProtoMono] text-[#0052FF] text-center">Pool<br/>Status</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="block mb-2">
-                  <WalletControl />
-                </div>
-                <span className="text-s [font-family:ProtoMono] text-[#0052FF] text-center">
-                  {address ? (
-                    "Disconnect"
-                  ) : (
-                    <>
-                      Connect<br/>Wallet
-                    </>
-                  )}
-                </span>
-              </div>
-              
+      {/* Control buttons */}
+      <div className="w-full max-w-2xl mx-auto px-1 py-1">
+        <div className="grid grid-cols-3 gap-x-4">
+          <div className="flex flex-col items-center">
+            <ControlButton onClick={() => handleShare()} className="block mb-2" />
+            <span className="text-s [font-family:ProtoMono] text-[#0052FF] text-center">Share<br/>MiniApp</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <ControlButton onClick={() => setIsModalOpen(true)} className="block mb-2" />
+            <span className="text-s [font-family:ProtoMono] text-[#0052FF] text-center">Pool<br/>Status</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="block mb-2">
+              <WalletControl />
             </div>
+            <span className="text-s [font-family:ProtoMono] text-[#0052FF] text-center">
+              {address ? (
+                "Disconnect"
+              ) : (
+                <>
+                  Connect<br/>Wallet
+                </>
+              )}
+            </span>
+        </div>
+        </div>
+      </div>
 
       <PoolModal 
         isOpen={isModalOpen} 

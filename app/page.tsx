@@ -7,7 +7,7 @@ import {
 } from "@coinbase/onchainkit/minikit";
 import { Name, Identity } from "@coinbase/onchainkit/identity";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import Snake from "./components/snake";
+import BasePool from "./components/bpHome";
 import { useAccount } from "wagmi";
 import Check from "./svg/Check";
 
@@ -39,7 +39,7 @@ export default function App() {
         <button
           type="button"
           onClick={handleAddFrame}
-          className="cursor-pointer bg-transparent font-semibold text-sm"
+          className="cursor-pointer bg-transparent [font-family:ProtoMono] text-sm"
         >
           + SAVE FRAME
         </button>
@@ -48,7 +48,7 @@ export default function App() {
 
     if (frameAdded) {
       return (
-        <div className="flex items-center space-x-1 text-sm font-semibold animate-fade-out">
+        <div className="flex items-center space-x-1 text-sm [font-family:ProtoMono] animate-fade-out">
           <Check />
           <span>SAVED</span>
         </div>
@@ -59,52 +59,42 @@ export default function App() {
   }, [context, handleAddFrame, frameAdded]);
 
   return (
-    <div className="flex flex-col h-[100dvh] w-[100dvw] overflow-hidden font-sans bg-[#E5E5E5] text-black items-center snake-dark relative">
-      <div 
-        style={{
-          marginTop: context?.client?.safeAreaInsets?.top || 0,
-          marginBottom: context?.client?.safeAreaInsets?.bottom || 0,
-          marginLeft: context?.client?.safeAreaInsets?.left || 0,
-          marginRight: context?.client?.safeAreaInsets?.right || 0,
-        }}
-        className="w-full max-w-[520px] px-2"
-      >
-        <header className="mr-2 mt-1 flex justify-between">
-          <div className="justify-start pl-1">
+    <div className="flex flex-col h-screen w-full overflow-hidden">
+      {/* Header */}
+      <header className="w-full py-0 px-4 flex justify-between items-center">
+        <div className="flex items-center">
             {address ? (
               <Identity
                 address={address}
                 schemaId={SCHEMA_UID}
-                className="!bg-inherit p-0 [&>div]:space-x-2"
+              className="!bg-inherit p-0 [&>div]:space-x-2 [font-family:ProtoMono]"
               >
-                <Name className="text-inherit">
-                </Name>
+              <Name className="text-inherit" />
               </Identity>
             ) : (
-              <div className="pl-2 pt-1 text-gray-500 text-sm font-semibold">
+            <div className="text-gray-500 text-sm [font-family:ProtoMono]">
                 NOT CONNECTED
               </div>
             )}
           </div>
-          <div className="pr-1 justify-end">{saveFrameButton}</div>
+        <div>{saveFrameButton}</div>
         </header>
 
-        <main className="font-serif">
-          {/* <BasePool /> */}
-          <Snake />
+      {/* Main Content */}
+      <main className="flex-1 w-full overflow-y-auto">
+          <BasePool />
         </main>
 
-        <footer className="absolute bottom-4 flex flex-col items-center w-screen max-w-[520px] justify-center">
+      {/* Footer */}
+      <footer className="w-full py-1 flex justify-center">
           <button
             type="button"
-            className="px-2 py-1 flex justify-start rounded-2xl font-semibold opacity-40 border border-black text-xs"
+          className="px-2 py-1 flex justify-start rounded-2xl opacity-40 border border-black text-xs [font-family:ProtoMono]"
             onClick={() => openUrl("https://base.org/builders/minikit")}
           >
             BUILT ON BASE WITH MINIKIT
           </button>
-
         </footer>
-      </div>
     </div>
   );
 }
