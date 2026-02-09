@@ -22,7 +22,7 @@ export default function DescriptionModal({ isOpen, onClose }: DescriptionModalPr
         </div>
         <div className="text-[#0A0B0D] [font-family:ProtoMono] space-y-4">
           <div>
-            <h3 className="text-[#0052FF] text-xl mb-2">🎯 Technical Overview</h3>
+            <h3 className="text-[#0052FF] text-xl mb-2">🎯 Technical Overview of BasePool 🎯</h3>
             <p className="text-base leading-relaxed">
               BasePool is a provably fair onchain lottery game deployed on Base, designed to be simple, transparent, and autonomous. The game revolves around a single smart contract that collects ETH and distributes the entire pool to a randomly selected winner.
             </p>
