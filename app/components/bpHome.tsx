@@ -59,7 +59,6 @@ Available Pools:
 0.5 ETH Pool Prize
 0.1 ETH Pool Prize
 0.05 ETH Pool Prize
-1 ETH Pool (Coming Soon)
 
 Cost per ticket: 0.0005 ETH`;
 
@@ -148,11 +147,11 @@ Cost per ticket: 0.0005 ETH`;
               <span className="text-[#0052FF] hover:text-white text-2xl">O.05 ETH Pool</span>
             </button>
                         {/* 0.05 ETH Pool / 100 tickets */}
-           <button 
+{/*            <button 
               className="w-full flex justify-between items-center py-1 border-b border-[#ff8800] cursor-pointer hover:bg-[#0052FF] hover:text-white transition-colors mb-2"
             >
               <span className="text-[#0052FF] hover:text-white text-2xl">1 ETH Coming Soon</span>
-            </button>
+            </button> */}
             </div>
             <h2 
               className="text-[#0052FF] text-xl [font-family:ProtoMono] leading-tight text-center mb-2 cursor-pointer hover:opacity-80"
