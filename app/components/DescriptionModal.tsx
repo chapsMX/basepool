@@ -35,7 +35,7 @@ export default function DescriptionModal({ isOpen, onClose }: DescriptionModalPr
               <ul className="list-disc pl-5 space-y-1">
                 <li>Each 0.0005 ETH sent to the BasePool smart contract grants the sender one unique number, each number corresponds to 1 ticket.</li>
                 <li>Smart Contract will only receive TXs with multiples of 0.0005 ETH</li>
-                <li>Numbers are assigned sequentially as they are claimed.</li>
+                <li>Numbers are assigned sequentially as they are purchased.</li>
               </ul>
 
               <h4 className="font-semibold">Draw Trigger</h4>
