@@ -7,18 +7,21 @@ export async function GET() {
       payload: process.env.FARCASTER_PAYLOAD,
       signature: process.env.FARCASTER_SIGNATURE,
     },
+    baseBuilder: {
+      ownerAddress: "0x58F521068A39a5e675ACc7Edd7E269f576867691",
+    },
       frame: {
-      version: process.env.NEXT_PUBLIC_VERSION,
-      name: process.env.NEXT_PUBLIC_ONCHAINKIT_PROJECT_NAME,
+      version: "1",
+      name: "Base Pool",
       homeUrl: URL,
-      iconUrl: process.env.NEXT_PUBLIC_ICON_URL,
-      imageUrl: process.env.NEXT_PUBLIC_IMAGE_URL,
-      buttonTitle: `Launch ${process.env.NEXT_PUBLIC_ONCHAINKIT_PROJECT_NAME}`,
-      splashImageUrl: process.env.NEXT_PUBLIC_SPLASH_IMAGE_URL,
-      splashBackgroundColor: `#${process.env.NEXT_PUBLIC_SPLASH_BACKGROUND_COLOR}`,
+      iconUrl: `${URL}/icon.png`,
+      imageUrl: `${URL}/basePool_New.png`,
+      buttonTitle: `Launch Base Pool`,
+      splashImageUrl: `${URL}/splash.png`,
+      splashBackgroundColor: `#0052FF`,
       webhookUrl: `https://api.neynar.com/f/app/2b8b88b6-594d-4b0c-ae23-67684694b621/event`,
       subtitle: `A provable fair lottery game.`,
-      description: `BasePool is a provably fair lottery game on Base. Join with 0.0005 ETH per number.`,
+      description: `A fair onchain lottery powered by Base and Pyth.`,
       screenshotUrls: [
      `${URL}/ss_01.jpg`,
      `${URL}/ss_02.jpg`,
@@ -31,6 +34,7 @@ export async function GET() {
       ogTitle: `Join BasePool`,
       ogDescription: `A fair onchain lottery powered by Base and Pyth`,
       ogImageUrl: `${URL}/hero.png`,
+      noindex: "false"
     },
   });
 }
